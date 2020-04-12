@@ -42,6 +42,7 @@ export const Home: FC<{}> = () => {
     </>
   ) : user == null ? (
     <>
+      <p>お店の方は以下のボタンからログインしてください。</p>
       <p>
         <button onClick={signInWithGoogle}>Googleアカウントでログイン</button>
       </p>
