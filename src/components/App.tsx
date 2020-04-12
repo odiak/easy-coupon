@@ -6,6 +6,7 @@ import { ShopDetail } from './ShopDetail'
 import { NewShop } from './NewShop'
 import { CouponDetail } from './CouponDetail'
 import { EditShop } from './EditShop'
+import { NewCoupon } from './NewCoupon'
 
 export const App: FC<{}> = () => {
   return (
@@ -19,6 +20,7 @@ export const App: FC<{}> = () => {
           <Route exact path="/shops/new" component={NewShop} />
           <Route exact path="/shops/:shopId" component={ShopDetail} />
           <Route exact path="/shops/:shopId/edit" component={EditShop} />
+          <Route exact path="/shops/:shopId/coupons/new" component={NewCoupon} />
           <Route exact path="/shops/:shopId/coupons/:couponId" component={CouponDetail} />
           <Route component={NotFound} />
         </Switch>

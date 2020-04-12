@@ -37,7 +37,7 @@ export class CouponService {
       .collection('shops')
       .doc(shopId)
       .collection('coupons')
-      .orderBy('createdAt')
+      .orderBy('createdAt', 'desc')
       .limit(limit)
     if (anchor) {
       q = q.startAfter(anchor)
@@ -56,6 +56,18 @@ export class CouponService {
       .doc(couponId)
       .get()
     return docToCoupon(doc)
+  }
+
+  async createCoupon(
+    shopId: string,
+    couponDraft: Pick<Coupon, 'title' | 'description'>
+  ): Promise<{ couponId: string }> {
+    const doc = await this.firestore
+      .collection('shops')
+      .doc(shopId)
+      .collection('coupons')
+      .add({ ...couponDraft, status: 'unpaid', createdAt: firebase.firestore.Timestamp.now() })
+    return { couponId: doc.id }
   }
 }
 
