@@ -42,6 +42,10 @@ export class ShopService {
       .add({ ...shopDraft, createdAt: firebase.firestore.Timestamp.now() })
     return { shopId: doc.id }
   }
+
+  async updateShop(shopId: string, update: Pick<Shop, 'name' | 'description'>): Promise<void> {
+    await this.firestore.collection('shops').doc(shopId).update(update)
+  }
 }
 
 function docToShop(doc: firebase.firestore.DocumentSnapshot<any>): Shop {
