@@ -35,7 +35,6 @@ export const Home: FC<{}> = () => {
       return
     }
 
-    console.log(user.uid)
     ;(async () => {
       const shops = await firestore.collection('shops').where('ownerUid', '==', user.uid).get()
       setShops(shops.docs.map((s) => ({ id: s.id, name: s.data().name })))

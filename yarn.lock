@@ -705,6 +705,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/qrcode.react@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@types/qrcode.react@npm:1.0.0"
+  dependencies:
+    "@types/react": "*"
+  checksum: 1e89db69cdcc011eccd327929924a44af191299f98ac350815a23fde2da0ab8854d304d0008591bf16a0437f872e21329ecc937a3d841be4b8cdce3124a1e828
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:^16.9.6":
   version: 16.9.6
   resolution: "@types/react-dom@npm:16.9.6"
@@ -2613,6 +2622,7 @@ __metadata:
   dependencies:
     "@emotion/core": ^10.0.28
     "@emotion/styled": ^10.0.27
+    "@types/qrcode.react": ^1.0.0
     "@types/react": ^16.9.34
     "@types/react-dom": ^16.9.6
     "@types/react-router-dom": ^5.1.4
@@ -2622,6 +2632,7 @@ __metadata:
     html-webpack-plugin: ^4.2.0
     pnp-webpack-plugin: ^1.6.4
     prettier: ^2.0.4
+    qrcode.react: ^1.0.0
     react: ^16.13.1
     react-dom: ^16.13.1
     react-router-dom: ^5.1.2
@@ -5940,7 +5951,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2":
+"prop-types@npm:^15.6.0, prop-types@npm:^15.6.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -6062,6 +6073,26 @@ fsevents@^1.2.7:
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
   checksum: 497a65093f48fc94a91a2166cf4365d162ab07977adc8dc23dfb6c109c3d0dc004ea3623813a64e62992ad85d14b6a13a489055acd5c4763f56cae0733d71095
+  languageName: node
+  linkType: hard
+
+"qr.js@npm:0.0.0":
+  version: 0.0.0
+  resolution: "qr.js@npm:0.0.0"
+  checksum: a070de9cc2c0cd2acb7cbbe8b4afc558457840607632ad363a1961e29d4b47f2eed8b417b6d9c0f06cb41533dffe7477006d1c1c3fa28ace9fa124d32911d7aa
+  languageName: node
+  linkType: hard
+
+"qrcode.react@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "qrcode.react@npm:1.0.0"
+  dependencies:
+    loose-envify: ^1.4.0
+    prop-types: ^15.6.0
+    qr.js: 0.0.0
+  peerDependencies:
+    react: ^15.5.3 || ^16.0.0
+  checksum: c87f84868774d49925aa6f69c51ab5e784129a56cdea51db81f56ca4cec583d2089bd82838d657a40117245680c3eb65366b288ce26d4108e00c4843193d4ffa
   languageName: node
   linkType: hard
 
