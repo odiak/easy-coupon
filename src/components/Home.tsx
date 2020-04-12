@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { Shop, ShopServide } from '../services/ShopService'
+import { Shop, ShopService } from '../services/ShopService'
 import { useUser } from '../utils/hooks'
 import { AuthService } from '../services/AuthService'
 
 export const Home: FC<{}> = () => {
-  const shopService = ShopServide.getInstance()
+  const shopService = ShopService.getInstance()
   const authService = AuthService.getInstance()
 
   const [pending, setPending] = useState(true)

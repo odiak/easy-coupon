@@ -38,7 +38,11 @@ export const ShopDetail: FC<{}> = () => {
   ) : (
     <>
       <h2>ショップ: {shop.name}</h2>
+      <p>{shop.description}</p>
       <h3>クーポンのリスト</h3>
+      <p>
+        <Link to={`/shops/${shopId}/coupons/new`}>クーポンを新しく作成する</Link>
+      </p>
       {coupons != null &&
         coupons.map((c) => (
           <div key={c.id}>
