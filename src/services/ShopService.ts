@@ -17,7 +17,7 @@ export class ShopServide {
   private firestore = firebase.firestore()
 
   async fetchShop(shopId: string): Promise<Shop> {
-    const doc = await this.firestore.collection('shop').doc(shopId).get()
+    const doc = await this.firestore.collection('shops').doc(shopId).get()
     return docToShop(doc)
   }
 

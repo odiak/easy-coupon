@@ -2,11 +2,13 @@ import memoizeOne from 'memoize-one'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 
+export type CouponStatus = 'unpaid' | 'paid' | 'used' | 'canceled'
+
 export type Coupon = {
   id: string
   title: string
   description: string
-  status: 'unpaid' | 'paid' | 'used' | 'canceled'
+  status: CouponStatus
   createdAt: Date
 }
 
@@ -44,6 +46,16 @@ export class CouponService {
     const coupons = docs.docs.map(docToCoupon)
     const newAnchor = docs.empty ? null : docs.docs[docs.size - 1]
     return { coupons, anchor: newAnchor }
+  }
+
+  async fetchCoupon(shopId: string, couponId: string): Promise<Coupon> {
+    const doc = await this.firestore
+      .collection('shops')
+      .doc(shopId)
+      .collection('coupons')
+      .doc(couponId)
+      .get()
+    return docToCoupon(doc)
   }
 }
 

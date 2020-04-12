@@ -1,28 +1,18 @@
-import React, { FC, useEffect, useState, useMemo, useRef } from 'react'
+import React, { FC, useEffect, useState, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ShopServide, Shop } from '../services/ShopService'
 import { CouponService, Coupon, CouponAnchor } from '../services/CouponService'
+import { useShop } from '../utils/hooks'
 
 export const ShopDetail: FC<{}> = () => {
-  const { shopService, couponService } = useMemo(
-    () => ({ shopService: ShopServide.getInstance(), couponService: CouponService.getInstance() }),
-    []
-  )
+  const couponService = CouponService.getInstance()
 
   const { shopId } = useParams() as { shopId: string }
 
-  const [shop, setShop] = useState<Shop | null>(null)
+  const shop = useShop(shopId)
   const [coupons, setCoupons] = useState<Array<Coupon> | null>(null)
   const { current: internals } = useRef({
     couponAnchor: null as CouponAnchor
   })
-
-  useEffect(() => {
-    ;(async () => {
-      const shop = await shopService.fetchShop(shopId)
-      setShop(shop)
-    })()
-  }, [shopId])
 
   useEffect(() => {
     if (shop == null) {

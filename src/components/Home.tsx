@@ -1,31 +1,18 @@
-import React, { FC, useEffect, useState, useMemo, useCallback } from 'react'
+import React, { FC, useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import firebase from 'firebase/app'
-import 'firebase/auth'
 import { Shop, ShopServide } from '../services/ShopService'
+import { useUser } from '../utils/hooks'
+import { AuthService } from '../services/AuthService'
 
 export const Home: FC<{}> = () => {
-  const { auth, googleAuthProvider, shopService } = useMemo(
-    () => ({
-      auth: firebase.auth(),
-      googleAuthProvider: new firebase.auth.GoogleAuthProvider(),
-      shopService: ShopServide.getInstance()
-    }),
-    []
-  )
+  const shopService = ShopServide.getInstance()
+  const authService = AuthService.getInstance()
 
   const [pending, setPending] = useState(true)
-  const [user, setUser] = useState<firebase.User | null>(null)
+  const user = useUser(() => {
+    setPending(false)
+  })
   const [shops, setShops] = useState<Array<Shop> | null>(null)
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setPending(false)
-      setUser(user)
-    })
-
-    return unsubscribe
-  }, [auth])
 
   useEffect(() => {
     if (user == null) {
@@ -40,14 +27,14 @@ export const Home: FC<{}> = () => {
   }, [user])
 
   const signInWithGoogle = useCallback(() => {
-    auth.signInWithRedirect(googleAuthProvider)
-  }, [auth, googleAuthProvider])
+    authService.signInWithGoogle()
+  }, [authService])
 
   const signOut = useCallback(() => {
     if (!confirm('ログアウトします。よろしいですか？')) return
 
-    auth.signOut()
-  }, [auth])
+    authService.signOut()
+  }, [authService])
 
   return pending ? (
     <>
