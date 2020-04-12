@@ -2,16 +2,14 @@ import React, { FC, useEffect, useState, useMemo, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import 'firebase/firestore'
-
-type Shop = { id: string; name: string }
+import { Shop, ShopServide } from '../services/ShopService'
 
 export const Home: FC<{}> = () => {
-  const { auth, googleAuthProvider, firestore } = useMemo(
+  const { auth, googleAuthProvider, shopService } = useMemo(
     () => ({
       auth: firebase.auth(),
       googleAuthProvider: new firebase.auth.GoogleAuthProvider(),
-      firestore: firebase.firestore()
+      shopService: ShopServide.getInstance()
     }),
     []
   )
@@ -36,8 +34,8 @@ export const Home: FC<{}> = () => {
     }
 
     ;(async () => {
-      const shops = await firestore.collection('shops').where('ownerUid', '==', user.uid).get()
-      setShops(shops.docs.map((s) => ({ id: s.id, name: s.data().name })))
+      const { shops } = await shopService.fetchShops({ uid: user.uid })
+      setShops(shops)
     })()
   }, [user])
 
