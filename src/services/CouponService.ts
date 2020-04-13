@@ -69,6 +69,15 @@ export class CouponService {
       .add({ ...couponDraft, status: 'unpaid', createdAt: firebase.firestore.Timestamp.now() })
     return { couponId: doc.id }
   }
+
+  async updateStatus(shopId: string, couponId: string, status: CouponStatus): Promise<void> {
+    await this.firestore
+      .collection('shops')
+      .doc(shopId)
+      .collection('coupons')
+      .doc(couponId)
+      .update({ status })
+  }
 }
 
 function docToCoupon(doc: firebase.firestore.DocumentSnapshot): Coupon {
