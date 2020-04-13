@@ -20,10 +20,8 @@ export function useCoupon(shopId: string, couponId: string): Coupon | null {
   const couponService = CouponService.getInstance()
   const [coupon, setCoupon] = useState<Coupon | null>(null)
   useEffect(() => {
-    ;(async () => {
-      setCoupon(await couponService.fetchCoupon(shopId, couponId))
-    })()
-  }, [])
+    return couponService.watchCoupon(shopId, couponId, setCoupon)
+  }, [shopId, couponId])
 
   return coupon
 }
@@ -43,9 +41,11 @@ export function useUser(callback?: (user: User | null) => void): User | null {
 export function useRequireSignedIn(): void {
   const history = useHistory()
 
-  AuthService.getInstance().onAuthStateChanged((user) => {
-    if (user == null) {
-      history.replace('/')
-    }
-  })
+  useEffect(() => {
+    return AuthService.getInstance().onAuthStateChanged((user) => {
+      if (user == null) {
+        history.replace('/')
+      }
+    })
+  }, [])
 }
