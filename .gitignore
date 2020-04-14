@@ -2,3 +2,5 @@
 node_modules
 .pnp.js
 .vscode
+dist
+.firebase
