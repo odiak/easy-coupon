@@ -92,6 +92,19 @@ export class CouponService {
       .doc(couponId)
       .update({ status })
   }
+
+  async updateCoupon(
+    shopId: string,
+    couponId: string,
+    update: Pick<Coupon, 'title' | 'description'>
+  ): Promise<void> {
+    await this.firestore
+      .collection('shops')
+      .doc(shopId)
+      .collection('coupons')
+      .doc(couponId)
+      .update(update)
+  }
 }
 
 function docToCoupon(doc: firebase.firestore.DocumentSnapshot): Coupon {
