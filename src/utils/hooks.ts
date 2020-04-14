@@ -16,11 +16,15 @@ export function useShop(shopId: string): Shop | null {
   return shop
 }
 
-export function useCoupon(shopId: string, couponId: string): Coupon | null {
+export function useCoupon(shopId: string, couponId: string, watch: boolean = false): Coupon | null {
   const couponService = CouponService.getInstance()
   const [coupon, setCoupon] = useState<Coupon | null>(null)
   useEffect(() => {
-    return couponService.watchCoupon(shopId, couponId, setCoupon)
+    if (watch) {
+      return couponService.watchCoupon(shopId, couponId, setCoupon)
+    } else {
+      couponService.fetchCoupon(shopId, couponId).then(setCoupon)
+    }
   }, [shopId, couponId])
 
   return coupon

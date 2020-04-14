@@ -10,7 +10,7 @@ export const CouponDetail: FC<{}> = () => {
   const couponService = CouponService.getInstance()
 
   const shop = useShop(shopId)
-  const coupon = useCoupon(shopId, couponId)
+  const coupon = useCoupon(shopId, couponId, true)
   const user = useUser()
 
   const changeStatus = async (status: CouponStatus) => {

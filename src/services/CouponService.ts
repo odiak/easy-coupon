@@ -48,6 +48,17 @@ export class CouponService {
     return { coupons, anchor: newAnchor }
   }
 
+  async fetchCoupon(shopId: string, couponId: string): Promise<Coupon> {
+    const doc = await this.firestore
+      .collection('shops')
+      .doc(shopId)
+      .collection('coupons')
+      .doc(couponId)
+      .get()
+
+    return docToCoupon(doc)
+  }
+
   watchCoupon(shopId: string, couponId: string, callback: (coupon: Coupon) => void): () => void {
     const unsubscribe = this.firestore
       .collection('shops')
