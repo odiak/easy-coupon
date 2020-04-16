@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import { Home } from './Home'
 import { NotFound } from './NotFound'
@@ -12,6 +12,7 @@ import { css, Global } from '@emotion/core'
 import styled from '@emotion/styled'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { AuthService } from '../services/AuthService'
 
 const globalStyles = css`
   html {
@@ -44,6 +45,10 @@ const ContentContainer = styled.div`
 `
 
 export const App: FC<{}> = () => {
+  useEffect(() => {
+    AuthService.getInstance().handleRedirectResult()
+  }, [])
+
   return (
     <BrowserRouter>
       <>

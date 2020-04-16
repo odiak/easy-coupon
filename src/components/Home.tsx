@@ -27,7 +27,11 @@ export const Home: FC<{}> = () => {
   }, [user])
 
   const signInWithGoogle = useCallback(() => {
-    authService.signInWithGoogle()
+    authService.signIn('google')
+  }, [authService])
+
+  const signInWithFacebook = useCallback(() => {
+    authService.signIn('facebook')
   }, [authService])
 
   const signOut = useCallback(() => {
@@ -45,6 +49,7 @@ export const Home: FC<{}> = () => {
       <p>お店の方は以下のボタンからログインしてください。</p>
       <p>
         <button onClick={signInWithGoogle}>Googleアカウントでログイン</button>
+        <button onClick={signInWithFacebook}>Facebookアカウントでログイン</button>
       </p>
     </>
   ) : (
