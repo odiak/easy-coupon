@@ -1,7 +1,10 @@
-import React, { FC, useEffect, useState, useRef } from 'react'
+import React, { FC, useEffect, useState, useRef, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { CouponService, Coupon, CouponAnchor } from '../services/CouponService'
 import { useShop, useUser } from '../utils/hooks'
+import styled from '@emotion/styled'
+
+const limit = 30
 
 export const ShopDetail: FC<{}> = () => {
   const couponService = CouponService.getInstance()
@@ -22,15 +25,18 @@ export const ShopDetail: FC<{}> = () => {
       return
     }
 
-    ;(async () => {
-      const { coupons, anchor } = await couponService.fetchCoupons({
-        shopId,
-        anchor: internals.couponAnchor
-      })
-      setCoupons(coupons)
-      internals.couponAnchor = anchor
-    })()
+    loadCoupons()
   }, [shop])
+
+  const loadCoupons = useCallback(async () => {
+    const { coupons: newCoupons, anchor } = await couponService.fetchCoupons({
+      shopId,
+      anchor: internals.couponAnchor,
+      limit
+    })
+    internals.couponAnchor = anchor
+    setCoupons((coupons || []).concat(newCoupons))
+  }, [shopId, coupons])
 
   return shop == null ? (
     <>
@@ -49,15 +55,40 @@ export const ShopDetail: FC<{}> = () => {
           <p>
             <Link to={`/shops/${shopId}/coupons/new`}>クーポンを新しく作成する</Link>
           </p>
-          {coupons != null &&
-            coupons.map((c) => (
-              <div key={c.id}>
-                <Link to={`/shops/${shopId}/coupons/${c.id}`}>{c.title}</Link>
-              </div>
-            ))}
+          {coupons != null && (
+            <>
+              {coupons.map((c) => (
+                <CouponInfo key={c.id} coupon={c} shopId={shopId} />
+              ))}
+              {internals.couponAnchor && <button onClick={loadCoupons}>さらに読み込む</button>}
+            </>
+          )}
           {coupons != null && coupons.length === 0 && <p>クーポンが登録されていません。</p>}
         </>
       )}
     </>
+  )
+}
+
+const CouponInfoContainer = styled(Link)`
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 6px #0009;
+  padding: 10px;
+
+  &:link,
+  &:visited,
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+`
+
+const CouponInfo: FC<{ coupon: Coupon; shopId: string }> = ({ coupon, shopId }) => {
+  return (
+    <CouponInfoContainer to={`/shops/${shopId}/coupons/${coupon.id}`}>
+      <p>{coupon.title}</p>
+    </CouponInfoContainer>
   )
 }

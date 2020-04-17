@@ -38,13 +38,13 @@ export class CouponService {
       .doc(shopId)
       .collection('coupons')
       .orderBy('createdAt', 'desc')
-      .limit(limit)
+      .limit(limit + 1)
     if (anchor) {
       q = q.startAfter(anchor)
     }
     const docs = await q.get()
-    const coupons = docs.docs.map(docToCoupon)
-    const newAnchor = docs.empty ? null : docs.docs[docs.size - 1]
+    const coupons = docs.docs.slice(0, limit - 1).map(docToCoupon)
+    const newAnchor = docs.size <= limit ? null : docs.docs[limit - 1]
     return { coupons, anchor: newAnchor }
   }
 
