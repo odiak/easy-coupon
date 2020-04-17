@@ -63,12 +63,17 @@ export const Home: FC<{}> = () => {
       <p>
         <Link to="/shops/new">お店を新しく登録する</Link>
       </p>
-      {shops != null &&
+      {shops == null ? (
+        <>
+          <p>お店の情報を読み込んでいます。</p>
+        </>
+      ) : (
         shops.map(({ id, name }) => (
           <p key={id}>
             <Link to={`/shops/${id}`}>{name}</Link>
           </p>
-        ))}
+        ))
+      )}
       {shops != null && shops.length === 0 && <p>お店が登録されていません。</p>}
     </>
   )
