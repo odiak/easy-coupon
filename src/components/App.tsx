@@ -13,6 +13,7 @@ import styled from '@emotion/styled'
 import { Footer } from './Footer'
 import { Header } from './Header'
 import { AuthService } from '../services/AuthService'
+import { PrivacyPolicy } from './PrivacyPolicy'
 
 const globalStyles = css`
   html {
@@ -63,6 +64,7 @@ export const App: FC<{}> = () => {
             <Route exact path="/shops/:shopId/coupons/new" component={NewCoupon} />
             <Route exact path="/shops/:shopId/coupons/:couponId" component={CouponDetail} />
             <Route exact path="/shops/:shopId/coupons/:couponId/edit" component={EditCoupon} />
+            <Route path="/privacy-policy" component={PrivacyPolicy} />
             <Route component={NotFound} />
           </Switch>
         </ContentContainer>
