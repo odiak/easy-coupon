@@ -28,7 +28,7 @@ export const NewCoupon: FC<{}> = () => {
         </div>
         <div>
           <label>説明など</label>
-          <textarea name="title" ref={register()}></textarea>
+          <textarea name="description" ref={register()}></textarea>
         </div>
         <button type="submit">作成する</button>
       </form>
